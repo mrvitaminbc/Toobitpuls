@@ -1,0 +1,6 @@
+{
+  "name": "ToobitPulse Futures Radar",
+  "description": "Real-time Toobit Futures market explorer, suspicious volume & pre-pump/pre-dump detector, and multi-factor trading signal engine with bilingual Persian/English support.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
