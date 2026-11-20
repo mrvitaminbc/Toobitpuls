@@ -203,6 +203,17 @@ export default function App() {
       document.documentElement.classList.remove('dark');
     }
     localStorage.setItem('tp_dark', JSON.stringify(isDark));
+
+    const themeColorMeta = document.querySelector('meta[name="theme-color"]');
+    if (themeColorMeta) {
+      themeColorMeta.setAttribute('content', isDark ? '#090D16' : '#FFFFFF');
+    }
+    const systemUi = (
+      window as unknown as {
+        ToobitSystemUi?: { setLightMode?: (light: boolean) => void };
+      }
+    ).ToobitSystemUi;
+    systemUi?.setLightMode?.(!isDark);
   }, [isDark]);
 
   useEffect(() => {
@@ -651,7 +662,7 @@ export default function App() {
   return (
     <div className="min-h-screen tp-canvas text-slate-900 dark:text-slate-100 flex">
       {/* Desktop Workspace Sidebar (lg+) */}
-      <aside className="hidden lg:flex lg:w-[244px] xl:w-[256px] shrink-0 flex-col sticky top-0 h-screen border-e border-slate-200/80 dark:border-slate-800/70 bg-white/88 dark:bg-[#090D16]/94 backdrop-blur-xl">
+      <aside className="hidden lg:flex lg:w-[244px] xl:w-[256px] shrink-0 flex-col sticky top-0 h-screen pt-safe pb-safe border-e border-slate-200/80 dark:border-slate-800/70 bg-white/88 dark:bg-[#090D16]/94 backdrop-blur-xl">
         {/* Brand Header */}
         <div className="h-14 px-4 flex items-center justify-between border-b border-slate-200/80 dark:border-slate-800/70">
           <button
@@ -830,8 +841,8 @@ export default function App() {
       {/* Main Content Shell */}
       <div className="flex-1 min-w-0 flex flex-col">
         {/* Top Command Bar (Single Clean Row) */}
-        <header className="sticky top-0 z-30 h-12 lg:h-14 border-b border-slate-200/80 dark:border-slate-800/70 bg-white/90 dark:bg-[#090D16]/88 backdrop-blur-xl">
-          <div className="max-w-[1440px] mx-auto h-full px-3 sm:px-5 flex items-center justify-between gap-3">
+        <header className="sticky top-0 z-30 pt-safe border-b border-slate-200/80 dark:border-slate-800/70 bg-white/90 dark:bg-[#090D16]/88 backdrop-blur-xl">
+          <div className="max-w-[1440px] mx-auto h-12 lg:h-14 px-3 sm:px-5 flex items-center justify-between gap-3">
             {/* Zone 1: Brand (mobile/tablet) + Live Stream Telemetry */}
             <div className="flex items-center gap-3 min-w-0">
               <button
@@ -1011,7 +1022,7 @@ export default function App() {
         )}
 
         {/* Main Workspace Viewport */}
-        <main className="flex-1 max-w-[1440px] w-full mx-auto px-3 sm:px-5 lg:px-6 py-5 pb-24 lg:pb-8">
+        <main className="flex-1 max-w-[1440px] w-full mx-auto px-3 sm:px-5 lg:px-6 py-5 pb-[calc(5.5rem+env(safe-area-inset-bottom,0px))] lg:pb-8">
           {activeTab === 'dashboard' && (
             <DashboardView
               tickers={tickers}
@@ -1145,25 +1156,27 @@ export default function App() {
       {/* Mobile Fixed Bottom Navigation Bar */}
       <nav
         aria-label="Mobile navigation"
-        className="lg:hidden fixed bottom-0 left-0 right-0 z-40 h-14 pb-safe border-t border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-[#090D16]/95 backdrop-blur-xl grid grid-cols-5 items-center"
+        className="lg:hidden fixed bottom-0 left-0 right-0 z-40 pb-safe border-t border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-[#090D16]/95 backdrop-blur-xl"
       >
-        {mobileNavItems.map((item) => {
-          const Icon = item.icon;
-          const active = activeTab === item.id;
-          return (
-            <button
-              key={item.id}
-              type="button"
-              onClick={() => setActiveTab(item.id)}
-              className={`min-h-[44px] flex flex-col items-center justify-center gap-0.5 text-[10px] font-semibold transition-colors ${
-                active ? 'text-sky-500' : 'text-slate-500 dark:text-slate-400'
-              }`}
-            >
-              <Icon className="w-5 h-5" />
-              <span className="truncate max-w-full px-1">{item.label}</span>
-            </button>
-          );
-        })}
+        <div className="h-14 grid grid-cols-5 items-center">
+          {mobileNavItems.map((item) => {
+            const Icon = item.icon;
+            const active = activeTab === item.id;
+            return (
+              <button
+                key={item.id}
+                type="button"
+                onClick={() => setActiveTab(item.id)}
+                className={`min-h-[44px] flex flex-col items-center justify-center gap-0.5 text-[10px] font-semibold transition-colors ${
+                  active ? 'text-sky-500' : 'text-slate-500 dark:text-slate-400'
+                }`}
+              >
+                <Icon className="w-5 h-5" />
+                <span className="truncate max-w-full px-1">{item.label}</span>
+              </button>
+            );
+          })}
+        </div>
       </nav>
     </div>
   );

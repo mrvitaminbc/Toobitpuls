@@ -232,7 +232,7 @@ export const PairSelectorDropdown: React.FC<PairSelectorDropdownProps> = ({
             role="listbox"
             aria-label={ariaLabel || t.selectPair}
             data-testid="pair-selector-panel"
-            className={`fixed inset-x-3 top-14 z-50 sm:absolute sm:inset-x-auto sm:top-full sm:mt-2 sm:w-[410px] ${
+            className={`fixed inset-x-3 top-[calc(3.5rem+env(safe-area-inset-top,0px))] z-50 sm:absolute sm:inset-x-auto sm:top-full sm:mt-2 sm:w-[410px] ${
               align === 'start' ? 'sm:start-0' : 'sm:end-0'
             } rounded-2xl border border-slate-200 dark:border-slate-700/80 bg-white dark:bg-[#0A101B] shadow-2xl overflow-hidden flex flex-col`}
           >

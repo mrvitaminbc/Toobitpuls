@@ -422,7 +422,7 @@ export const FuturesChart: React.FC<FuturesChartProps> = ({
       data-testid="pro-chart-container"
       className={
         isExpanded
-          ? 'fixed inset-3 z-50 rounded-2xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-[#090D16] p-4 shadow-2xl flex flex-col justify-between overflow-y-auto'
+          ? 'fixed inset-x-3 top-[calc(0.75rem+env(safe-area-inset-top,0px))] bottom-[calc(0.75rem+env(safe-area-inset-bottom,0px))] z-50 rounded-2xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-[#090D16] p-4 shadow-2xl flex flex-col justify-between overflow-y-auto'
           : 'tp-panel rounded-xl p-4'
       }
     >
